@@ -1,0 +1,28 @@
+1
+
+Corrida de Tartarugas de Angola, 2021
+
+5 
+Donatello, Turtles Stars
+Elio, Space Turtles
+Michaelangelo, United Turtles
+Mestre Splinter, Infinity Turtles
+Leonardo , Flash Turtles
+
+3 10 6 2 
+
+2
+
+Corrida do ISPTEC
+Elio, Space Turtles
+Michaelangelo, United Turtles
+Leonardo , Flash Turtles
+Mestre Splinter, Infinity Turtles
+Donatello, Turtles Stars
+
+Corrida da UTEC
+Donatello, Turtles Stars
+Mestre Splinter, Infinity Turtles
+Michaelangelo, United Turtles
+Leonardo , Flash Turtles
+Elio, Space Turtles

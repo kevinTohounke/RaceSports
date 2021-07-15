@@ -50,13 +50,25 @@ public class RaceSports {
         String fileName, fileName2;
         fileName = "Input.txt";
         
-        
+        int numeroDeCorridaDoCamp=0;
+        int numeroDePilotoDoCamp=0;
+         char d1,d2;
+         
         //Variaveis do Ficheiro de Saida
-        
+        int qtdDePontoSP;
         int numeroDeCampeonato=0;
         int controlCampeonato=0;
-        Campeonato newCamp;
+        Campeonato newCamp = null;
+        String [] vectNomePilotoSplit ;
+        Piloto newPilotoNewCamp;
+        int [] vectSPnewCamp;
+        String [] vectSplitSP;
+        int po=0,jos=0;
+        
+        Corrida corridaNewCamp = null;
        
+        String [] vectSplitNomeCamp = new String [2];
+        int numeroDeCorridaNewCamp=0;
 
         BufferedWriter bf2 = null;
         BufferedWriter bf = null;
@@ -415,33 +427,124 @@ public class RaceSports {
 
                 
                 // Escrevendo a saida partindo do file
-                
+                newCamp= new Campeonato();
                 for (int indeX = 0; indeX < leituraFile.size(); indeX++) {
                     if(indeX==0){
                     numeroDeCampeonato = Integer.parseInt(leituraFile.get(indeX));
+                    
                     }
-                    Campeonato [] vectCamp= new Campeonato[numeroDeCampeonato];
+                    //Leitura do nome do Campeonato
+                    
+                    if (indeX==2){
+                    vectSplitNomeCamp = leituraFile.get(indeX).split(",");
+                    
+                    newCamp.nome=vectSplitNomeCamp[0];
+                    newCamp.anoRealizacao=Integer.parseInt(vectSplitNomeCamp[1].trim());
+                    }
+                    //Leitura dos Pilotos do Campeonato
+                    if (indeX==4){
+                     numeroDePilotoDoCamp = Integer.parseInt(leituraFile.get(indeX).trim());
+                        for (int y = indeX+1; y <= numeroDePilotoDoCamp+indeX; y++) {
+                            newPilotoNewCamp = new Piloto();
+                            
+                            vectNomePilotoSplit = leituraFile.get(y).split(",");
+                            newPilotoNewCamp.nome  = vectNomePilotoSplit[0];
+                            newPilotoNewCamp.equipa= vectNomePilotoSplit[1];
+                            newCamp.pilotos.add(newPilotoNewCamp);
+                        }
+                        //leitura do Sistema de Pontuação
+                        if(indeX==4+numeroDePilotoDoCamp+2){
+                            
+                            
+                            if(leituraFile.get(4+numeroDePilotoDoCamp+1).charAt(1)!=' '){
+                                 d1 = leituraFile.get(4+numeroDePilotoDoCamp+1).charAt(0);
+                                 qtdDePontoSP= Integer.parseInt(String.valueOf(d1));
+                                
+                                 d2=leituraFile.get(4+numeroDePilotoDoCamp+1).charAt(1);
+                                String ds = Character.toString(d2)+d1;
+                                qtdDePontoSP = Integer.parseInt(ds);
+                            }else{
+                                
+                             d1 = leituraFile.get(4+numeroDePilotoDoCamp+1).charAt(0);
+                             qtdDePontoSP= Integer.parseInt(String.valueOf(d1));
+                            
+                            }
+                            vectSplitSP = new String[qtdDePontoSP];
+                            
+                            vectSplitSP= leituraFile.get(4+numeroDePilotoDoCamp+1).split(" ");
+                            
+                             vectSPnewCamp= new int[qtdDePontoSP];
+                            
+                            for (int lrt = 1; lrt < vectSplitSP.length; lrt++) {
+                                newCamp.sistemaPontuacao.add(Integer.parseInt(vectSplitSP[lrt]));                               
+                            }
+                            
+                        }
+                        //leitura das corridas
+                        if(indeX==4+numeroDePilotoDoCamp+2+2){
+                         numeroDeCorridaNewCamp = Integer.parseInt(String.valueOf(leituraFile.get(4+numeroDePilotoDoCamp+2+2).charAt(0)));
+                        
+                        
+                            for (int RT = indeX+1; RT < indeX+1+numeroDeCorridaNewCamp; RT++) {
+                                
+                                corridaNewCamp = new Corrida();
+                                corridaNewCamp.nome =leituraFile.get(RT+1);
+                                
+                                //LER OS PILOTOS DA CORRIDA E ATRIBUIR PONTOS
+                                for (int copa = (RT+1+1); copa < (RT+1+1)+newCamp.pilotos.size(); copa++) {
+                               leituraFile.get(copa);
+                                //Criacao do Piloto
+                                newPilotoNewCamp = new Piloto();
+                                vectNomePilotoSplit = leituraFile.get(copa).split(",");
+                                newPilotoNewCamp.nome= vectNomePilotoSplit[0];
+                                newPilotoNewCamp.equipa= vectNomePilotoSplit[1];
+                                newPilotoNewCamp.ponto=newCamp.sistemaPontuacao.get(jos);
+                                corridaNewCamp.pilotos.add(newPilotoNewCamp);
+                                jos++;
+                                
+                                // corridaNewCamp.pilotos.add();
+                                }
+                                newCamp.corridas.add(corridaNewCamp);
+                                
+                            }
+                        
+                        }
+                        
+                        
+                        
+                    
+                    
+                    }
+                    
                    
-                    while(controlCampeonato < numeroDeCampeonato){
-                    newCamp = new Campeonato();
+                   
                     
-                    
-                    
-                    vectCamp[controlCampeonato]=newCamp;
-                    controlCampeonato++;
-                    }
                     
                     
                 }
                 
-                
-                
-                
+               
+               /* System.out.println("Pilotos");
+                System.out.println("Nome do campeonato: "+newCamp.nome);
+                System.out.println("Ano de Realização : "+newCamp.anoRealizacao);
+                System.out.println("Quantidade de Pilotos"+newCamp.pilotos.size());
+                System.out.println("Numero de corridas"+newCamp.corridas.size());
+                System.out.println("Numero de pilotos do campeoanto"+numeroDePilotoDoCamp);
+                */
+                /*
+                for (int bgh = 0; bgh < newCamp.pilotos.size(); bgh++) {
+                    System.out.println(newCamp.pilotos.get(bgh).nome+" "+newCamp.pilotos.get(bgh).equipa);
+                }*/
+                for (int qwr = 0; qwr < leituraFile.size(); qwr++) {
+                    System.out.println(leituraFile.get(qwr)+"// Número da Linha: "+qwr);
+                }
                 break;
 
         }
 
-        //Leitura de um tipo de UM FICHEIRO: 
+        //print da leitura do File
+        
+        
     }
 
 }
