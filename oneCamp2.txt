@@ -1,0 +1,111 @@
+1
+
+Formula 1, 2020
+
+24 
+Felipe Pasta , Ferrari
+Sebastian Pappel , Red Bull
+Fernando Afonso, Ferrari
+Nico Rosbife, Mercedes
+Jason Bottom, Mclaren 
+Jerry Lewis Hamilton , McLaren
+Robert Cubico, Renault 
+Mark Bebber, Red Bull
+Adrian Grosso, Force India
+Vitantonio Tiuzzi , Force India
+Rubens Barriquebra , Williams
+Nico Inkrivelhulk, Williams 
+Michael Schumasso, Mercedes
+Vitaly Petregulhov , Renault
+Sebastian Boemio , Toro Rosso
+Jaime Alguemsuvae, Toro Rosso
+Jarro Bulli , Lotus
+Heikki Kovarrasen , Lotus 
+Karun Chanbinok, Hispania
+Bruno Megasena, Hispania
+Kamui Kamabalashi, BMW Sauber
+Pedro de lo Cravo, BMW sAUBER
+Timo Colt , Virgin
+Lucas Semgrassi, Virgin
+
+10 25 18 15 12 10 8 6 4 2 1 
+
+3
+
+GP do Bahrein
+Fernando Afonso, Ferrari
+Felipe Pasta , Ferrari
+Jerry Lewis Hamilton , McLaren
+Sebastian Pappel , Red Bull
+Nico Rosbife, Mercedes
+Jason Bottom, Mclaren 
+Mark Bebber, Red Bull
+Vitantonio Tiuzzi , Force India
+Rubens Barriquebra , Williams
+Nico Inkrivelhulk, Williams 
+Robert Cubico, Renault 
+Vitaly Petregulhov , Renault
+Adrian Grosso, Force India
+Michael Schumasso, Mercedes
+Sebastian Boemio , Toro Rosso
+Jaime Alguemsuvae, Toro Rosso
+Jarro Bulli , Lotus
+Heikki Kovarrasen , Lotus 
+Karun Chanbinok, Hispania
+Bruno Megasena, Hispania
+Kamui Kamabalashi, BMW Sauber
+Pedro de lo Cravo, BMW sAUBER
+Timo Colt , Virgin
+Lucas Semgrassi, Virgin
+
+GP da Australia
+Jason Bottom, Mclaren 
+Robert Cubico, Renault 
+Felipe Pasta , Ferrari
+Fernando Afonso, Ferrari
+Nico Rosbife, Mercedes
+Jerry Lewis Hamilton , McLaren
+Vitantonio Tiuzzi , Force India
+Rubens Barriquebra , Williams
+Mark Bebber, Red Bull
+Nico Inkrivelhulk, Williams 
+Michael Schumasso, Mercedes
+Vitaly Petregulhov , Renault
+Adrian Grosso, Force India
+Sebastian Pappel , Red Bull
+Sebastian Boemio , Toro Rosso
+Jaime Alguemsuvae, Toro Rosso
+Jarro Bulli , Lotus
+Heikki Kovarrasen , Lotus 
+Karun Chanbinok, Hispania
+Bruno Megasena, Hispania
+Kamui Kamabalashi, BMW Sauber
+Pedro de lo Cravo, BMW sAUBER
+Timo Colt , Virgin
+Lucas Semgrassi, Virgin
+
+GP da Malasia
+Sebastian Pappel , Red Bull
+Mark Bebber, Red Bull
+Nico Rosbife, Mercedes
+Robert Cubico, Renault 
+Adrian Grosso, Force India
+Jerry Lewis Hamilton , McLaren
+Felipe Pasta , Ferrari
+Jason Bottom, Mclaren 
+Nico Inkrivelhulk, Williams 
+Michael Schumasso, Mercedes
+Fernando Afonso, Ferrari
+Vitaly Petregulhov , Renault
+Rubens Barriquebra , Williams
+Vitantonio Tiuzzi , Force India
+Sebastian Boemio , Toro Rosso
+Jaime Alguemsuvae, Toro Rosso
+Jarro Bulli , Lotus
+Heikki Kovarrasen , Lotus 
+Karun Chanbinok, Hispania
+Bruno Megasena, Hispania
+Kamui Kamabalashi, BMW Sauber
+Pedro de lo Cravo, BMW sAUBER
+Timo Colt , Virgin
+Lucas Semgrassi, Virgin

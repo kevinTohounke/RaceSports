@@ -12,9 +12,26 @@ import java.util.Scanner;
 
 public class RaceSports {
 
+    public static int aux = 0;
+    public static ArrayList<String> leituraFile = new ArrayList<>();
+
+    static void quebraDeLinha() {
+        if (aux < leituraFile.size()) {
+            aux++;
+        } else {
+            System.out.println("Fim File");
+        }
+    }
+
+    static String getLinha() {
+
+        String s = leituraFile.get(aux);
+        //quebraDeLinha(aux,ficheiro);
+        return s;
+    }
+
     public static void main(String[] args) {
-        
-        ArrayList<String> leituraFile = new ArrayList<>();
+
         String fileNome, fileNome2;
         ArrayList<Campeonato> arrayListDeCampeonato = new ArrayList<>();
         Campeonato campeonatoSaida;
@@ -24,6 +41,7 @@ public class RaceSports {
         Campeonato c2 = new Campeonato();
         Corrida cEntrada;
         int yiu = 0, iu = 0, rep = 0;
+        int aux = 0;
         int numeroDeCorridaEntrada = 0;
         char cc;
         char cc2;
@@ -35,6 +53,7 @@ public class RaceSports {
         String[] arrayStrings;
         String htr;
         int switchControl;
+        int valor;
         String[] vectNomePilotoCorrida = new String[2];
 
         String lerLinhaSce = null;
@@ -43,32 +62,33 @@ public class RaceSports {
         String[] vectNomePiloto = new String[2];
         String[] vectNomeCampeonato;
         vectNomeCampeonato = new String[2];
-
+        String linha;
         int numeroPilotosEntrada = 0;
 
         Scanner in = new Scanner(System.in);
         String fileName, fileName2;
         fileName = "Input.txt";
-        
-        int numeroDeCorridaDoCamp=0;
-        int numeroDePilotoDoCamp=0;
-         char d1,d2;
-         
+
+        int numeroDeCorridaDoCamp = 0;
+        int numeroDePilotoDoCamp = 0;
+        char d1, d2;
+
         //Variaveis do Ficheiro de Saida
         int qtdDePontoSP;
-        int numeroDeCampeonato=0;
-        int controlCampeonato=0;
+        int numeroDeCampeonato = 0;
+        int controlCampeonato = 0;
         Campeonato newCamp = null;
-        String [] vectNomePilotoSplit ;
+        String[] vectNomePilotoSplit;
         Piloto newPilotoNewCamp;
-        int [] vectSPnewCamp;
-        String [] vectSplitSP;
-        int po=0,jos=0;
-        
+        int[] vectSPnewCamp;
+        String[] vectSplitSP;
+        int po = 0, jos = 0;
+        int qtdDePilotoDoCamp = 0;
         Corrida corridaNewCamp = null;
-       
-        String [] vectSplitNomeCamp = new String [2];
-        int numeroDeCorridaNewCamp=0;
+          ArrayList<Campeonato> listaCampFile = new ArrayList<Campeonato>();
+
+        String[] vectSplitNomeCamp = new String[2];
+        int numeroDeCorridaNewCamp = 0;
 
         BufferedWriter bf2 = null;
         BufferedWriter bf = null;
@@ -425,126 +445,130 @@ public class RaceSports {
 
                 }
 
-                
                 // Escrevendo a saida partindo do file
-                newCamp= new Campeonato();
-                for (int indeX = 0; indeX < leituraFile.size(); indeX++) {
-                    if(indeX==0){
-                    numeroDeCampeonato = Integer.parseInt(leituraFile.get(indeX));
-                    
-                    }
-                    //Leitura do nome do Campeonato
-                    
-                    if (indeX==2){
-                    vectSplitNomeCamp = leituraFile.get(indeX).split(",");
-                    
-                    newCamp.nome=vectSplitNomeCamp[0];
-                    newCamp.anoRealizacao=Integer.parseInt(vectSplitNomeCamp[1].trim());
-                    }
-                    //Leitura dos Pilotos do Campeonato
-                    if (indeX==4){
-                     numeroDePilotoDoCamp = Integer.parseInt(leituraFile.get(indeX).trim());
-                        for (int y = indeX+1; y <= numeroDePilotoDoCamp+indeX; y++) {
-                            newPilotoNewCamp = new Piloto();
-                            
-                            vectNomePilotoSplit = leituraFile.get(y).split(",");
-                            newPilotoNewCamp.nome  = vectNomePilotoSplit[0];
-                            newPilotoNewCamp.equipa= vectNomePilotoSplit[1];
-                            newCamp.pilotos.add(newPilotoNewCamp);
-                        }
-                        //leitura do Sistema de Pontuação
-                        if(indeX==4+numeroDePilotoDoCamp+2){
-                            
-                            
-                            if(leituraFile.get(4+numeroDePilotoDoCamp+1).charAt(1)!=' '){
-                                 d1 = leituraFile.get(4+numeroDePilotoDoCamp+1).charAt(0);
-                                 qtdDePontoSP= Integer.parseInt(String.valueOf(d1));
-                                
-                                 d2=leituraFile.get(4+numeroDePilotoDoCamp+1).charAt(1);
-                                String ds = Character.toString(d2)+d1;
-                                qtdDePontoSP = Integer.parseInt(ds);
-                            }else{
-                                
-                             d1 = leituraFile.get(4+numeroDePilotoDoCamp+1).charAt(0);
-                             qtdDePontoSP= Integer.parseInt(String.valueOf(d1));
-                            
-                            }
-                            vectSplitSP = new String[qtdDePontoSP];
-                            
-                            vectSplitSP= leituraFile.get(4+numeroDePilotoDoCamp+1).split(" ");
-                            
-                             vectSPnewCamp= new int[qtdDePontoSP];
-                            
-                            for (int lrt = 1; lrt < vectSplitSP.length; lrt++) {
-                                newCamp.sistemaPontuacao.add(Integer.parseInt(vectSplitSP[lrt]));                               
-                            }
-                            
-                        }
-                        //leitura das corridas
-                        if(indeX==4+numeroDePilotoDoCamp+2+2){
-                         numeroDeCorridaNewCamp = Integer.parseInt(String.valueOf(leituraFile.get(4+numeroDePilotoDoCamp+2+2).charAt(0)));
-                        
-                        
-                            for (int RT = indeX+1; RT < indeX+1+numeroDeCorridaNewCamp; RT++) {
-                                
-                                corridaNewCamp = new Corrida();
-                                corridaNewCamp.nome =leituraFile.get(RT+1);
-                                
-                                //LER OS PILOTOS DA CORRIDA E ATRIBUIR PONTOS
-                                for (int copa = (RT+1+1); copa < (RT+1+1)+newCamp.pilotos.size(); copa++) {
-                               leituraFile.get(copa);
-                                //Criacao do Piloto
-                                newPilotoNewCamp = new Piloto();
-                                vectNomePilotoSplit = leituraFile.get(copa).split(",");
-                                newPilotoNewCamp.nome= vectNomePilotoSplit[0];
-                                newPilotoNewCamp.equipa= vectNomePilotoSplit[1];
-                                newPilotoNewCamp.ponto=newCamp.sistemaPontuacao.get(jos);
-                                corridaNewCamp.pilotos.add(newPilotoNewCamp);
-                                jos++;
-                                
-                                // corridaNewCamp.pilotos.add();
-                                }
-                                newCamp.corridas.add(corridaNewCamp);
-                                
-                            }
-                        
-                        }
-                        
-                        
-                        
-                    
-                    
-                    }
-                    
-                   
-                   
-                    
-                    
-                    
-                }
+              
+                numeroDeCampeonato = Integer.parseInt(getLinha());
                 
-               
-               /* System.out.println("Pilotos");
-                System.out.println("Nome do campeonato: "+newCamp.nome);
-                System.out.println("Ano de Realização : "+newCamp.anoRealizacao);
-                System.out.println("Quantidade de Pilotos"+newCamp.pilotos.size());
-                System.out.println("Numero de corridas"+newCamp.corridas.size());
-                System.out.println("Numero de pilotos do campeoanto"+numeroDePilotoDoCamp);
-                */
-                /*
-                for (int bgh = 0; bgh < newCamp.pilotos.size(); bgh++) {
-                    System.out.println(newCamp.pilotos.get(bgh).nome+" "+newCamp.pilotos.get(bgh).equipa);
-                }*/
-                for (int qwr = 0; qwr < leituraFile.size(); qwr++) {
-                    System.out.println(leituraFile.get(qwr)+"// Número da Linha: "+qwr);
+                for (int p2 = 0; p2 < numeroDeCampeonato; p2++) {
+                    newCamp = new Campeonato();
+                    quebraDeLinha();
+                    quebraDeLinha();
+                    vectSplitNomeCamp = getLinha().split(",");
+
+                    newCamp.nome = vectSplitNomeCamp[0];
+
+                    newCamp.anoRealizacao = Integer.parseInt(vectSplitNomeCamp[1].trim());
+                    quebraDeLinha();
+                    quebraDeLinha();
+
+                    valor = Integer.parseInt(getLinha().trim());
+
+                    numeroDePilotoDoCamp = valor;
+
+                    qtdDePilotoDoCamp = valor;
+
+                    while (numeroDePilotoDoCamp > 0) {
+
+                        quebraDeLinha();
+                        newPilotoNewCamp = new Piloto();
+
+                        vectNomePilotoSplit = getLinha().split(",");
+                        newPilotoNewCamp.nome = vectNomePilotoSplit[0];
+                        newPilotoNewCamp.equipa = vectNomePilotoSplit[1];
+                        newCamp.pilotos.add(newPilotoNewCamp);
+
+                        numeroDePilotoDoCamp--;
+                    }
+                    quebraDeLinha();
+                    quebraDeLinha();
+                    vectSplitSP = getLinha().split(" ");
+
+                    for (int lrt = 1; lrt < vectSplitSP.length; lrt++) {
+                        newCamp.sistemaPontuacao.add(Integer.parseInt(vectSplitSP[lrt]));
+                    }
+                    quebraDeLinha();
+                    quebraDeLinha();
+
+                    numeroDeCorridaNewCamp = Integer.parseInt(String.valueOf(getLinha().charAt(0)));
+                    //System.out.println("Numero de corridas do camp: " + numeroDeCorridaNewCamp);
+
+                    while (numeroDeCorridaNewCamp > 0) {
+                        quebraDeLinha();
+                        quebraDeLinha();
+
+                        corridaNewCamp = new Corrida();
+                        corridaNewCamp.nome = getLinha();
+                       // System.out.println("nome das corridas: "+ corridaNewCamp.nome );
+                        while (qtdDePilotoDoCamp > 0) {
+                            quebraDeLinha();
+                            newPilotoNewCamp = new Piloto();
+                            vectNomePilotoSplit = getLinha().split(",");
+                            newPilotoNewCamp.nome = vectNomePilotoSplit[0];
+                            newPilotoNewCamp.equipa = vectNomePilotoSplit[1];
+                            //System.out.println( "Piloto (Nome+Equipa)"+newPilotoNewCamp.nome +", "+ newPilotoNewCamp.equipa);
+                            if (jos < newCamp.sistemaPontuacao.size()) {
+                                newPilotoNewCamp.ponto = newCamp.sistemaPontuacao.get(jos);
+                                jos++;
+                            }
+
+                            corridaNewCamp.pilotos.add(newPilotoNewCamp);
+
+                            qtdDePilotoDoCamp--;
+                        }
+                        newCamp.corridas.add(corridaNewCamp);
+                        jos = 0;
+                        qtdDePilotoDoCamp = valor;
+                        numeroDeCorridaNewCamp--;
+                    }
+                    
+                    listaCampFile.add(newCamp);
+                    quebraDeLinha();
                 }
                 break;
 
         }
+        System.out.println("Quantidade de Campeonatos:"+listaCampFile.size());
+        
+       
+        System.out.println("Quantidade de Pilotos" + newCamp.pilotos.size());
+        System.out.println("Numero de corridas: " + newCamp.corridas.size());
+        
+        for (int zx = 0; zx < listaCampFile.size(); zx++) {
+             System.out.println("Nome do campeonato: " + listaCampFile.get(zx).nome+", "+"Ano de Realização : " +  listaCampFile.get(zx).anoRealizacao);
+        
+        for (int i = 0; i < 2; i++) {
+            System.out.println("*******************************");
+        }
+        
+        System.out.println("Sistema de Pontuação");
+        for (int olp = 0; olp < listaCampFile.get(zx).sistemaPontuacao.size(); olp++) {
+            System.out.println(olp+"ºPonto: "+ listaCampFile.get(zx).sistemaPontuacao.get(olp));
+        }
+        
+        System.out.println(" #### Pilotos do Campeonato ###");
+        for (int zxc = 0; zxc < listaCampFile.get(zx).pilotos.size(); zxc++) {
+            System.out.println( listaCampFile.get(zx).pilotos.get(zxc).nome + ", " + listaCampFile.get(zx).pilotos.get(zxc).equipa + ",=" +  listaCampFile.get(zx).pilotos.get(zxc).ponto);
 
-        //print da leitura do File
+        }
+        for (int i = 0; i < 2; i++) {
+            System.out.println("*******************************");
+        }
+        System.out.println("#### Resultado das Corridas#### ");
+        for (int wsx = 0; wsx < listaCampFile.get(zx).corridas.size(); wsx++) {
+            System.out.println("Corrida: " +  listaCampFile.get(zx).corridas.get(wsx).nome);
+            for (int plm = 0; plm <  listaCampFile.get(zx).corridas.get(wsx).pilotos.size(); plm++) {
+                System.out.println( listaCampFile.get(zx).corridas.get(wsx).pilotos.get(plm).nome + ", " + listaCampFile.get(zx).corridas.get(wsx).pilotos.get(plm).equipa+"= "+ listaCampFile.get(zx).corridas.get(wsx).pilotos.get(plm).ponto);
+            }
+
+        }
         
+        }
         
+
     }
 
 }
+
+
+
+
