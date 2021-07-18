@@ -85,7 +85,7 @@ public class RaceSports {
         int po = 0, jos = 0;
         int qtdDePilotoDoCamp = 0;
         Corrida corridaNewCamp = null;
-          ArrayList<Campeonato> listaCampFile = new ArrayList<Campeonato>();
+        ArrayList<Campeonato> listaCampFile = new ArrayList<Campeonato>();
 
         String[] vectSplitNomeCamp = new String[2];
         int numeroDeCorridaNewCamp = 0;
@@ -446,9 +446,8 @@ public class RaceSports {
                 }
 
                 // Escrevendo a saida partindo do file
-              
                 numeroDeCampeonato = Integer.parseInt(getLinha());
-                
+
                 for (int p2 = 0; p2 < numeroDeCampeonato; p2++) {
                     newCamp = new Campeonato();
                     quebraDeLinha();
@@ -498,7 +497,7 @@ public class RaceSports {
 
                         corridaNewCamp = new Corrida();
                         corridaNewCamp.nome = getLinha();
-                       // System.out.println("nome das corridas: "+ corridaNewCamp.nome );
+                        // System.out.println("nome das corridas: "+ corridaNewCamp.nome );
                         while (qtdDePilotoDoCamp > 0) {
                             quebraDeLinha();
                             newPilotoNewCamp = new Piloto();
@@ -520,55 +519,58 @@ public class RaceSports {
                         qtdDePilotoDoCamp = valor;
                         numeroDeCorridaNewCamp--;
                     }
-                    
+
                     listaCampFile.add(newCamp);
                     quebraDeLinha();
+                }
+
+                try {
+
+                    bf2 = new BufferedWriter(new FileWriter(fileName2));
+                    for (int contadorEscritaCampeonatoOutput = 0; contadorEscritaCampeonatoOutput < listaCampFile.size(); contadorEscritaCampeonatoOutput++) {
+                        bf2.write( listaCampFile.get(contadorEscritaCampeonatoOutput).nome + ", " +  listaCampFile.get(contadorEscritaCampeonatoOutput).anoRealizacao);
+
+                        bf2.newLine();
+                        bf2.newLine();
+
+                        bf2.write("Classificação após " +  listaCampFile.get(contadorEscritaCampeonatoOutput).corridas.size() + " provas realizadas");
+                        bf2.newLine();
+                        bf2.newLine();
+                        bf2.write("Pilotos");
+                        bf2.newLine();
+                        bf2.newLine();
+
+                        // Escrita dos Pilotos:
+                        for (int perty = 0; perty < listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.size(); perty++) {
+                            bf2.write(Integer.toString(counterPil) + ". " +  listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).nome + ", " +  listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).equipa + ", " + Integer.toString( listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).ponto) + " pontos");
+                            bf2.newLine();
+                            counterPil++;
+                        }
+                        counterPil = 1;
+                        bf2.newLine();
+                        bf2.newLine();
+                        bf2.write("Equipas");
+                        bf2.newLine();
+                        bf2.newLine();
+                        //Escrita das equipas
+                        for (int equipCoun = 0; equipCoun <  listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.size(); equipCoun++) {
+                            bf2.write(Integer.toString(counterPil) + ". " +  listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.get(equipCoun).nome + ", " + Integer.toString( listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.get(equipCoun).ponto) + " pontos");
+                            bf2.newLine();
+                            counterPil++;
+                        }
+
+                        bf2.newLine();
+                    }
+                    bf2.close();
+
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+
                 }
                 break;
 
         }
-        System.out.println("Quantidade de Campeonatos:"+listaCampFile.size());
-        
-       
-        System.out.println("Quantidade de Pilotos" + newCamp.pilotos.size());
-        System.out.println("Numero de corridas: " + newCamp.corridas.size());
-        
-        for (int zx = 0; zx < listaCampFile.size(); zx++) {
-             System.out.println("Nome do campeonato: " + listaCampFile.get(zx).nome+", "+"Ano de Realização : " +  listaCampFile.get(zx).anoRealizacao);
-        
-        for (int i = 0; i < 2; i++) {
-            System.out.println("*******************************");
-        }
-        
-        System.out.println("Sistema de Pontuação");
-        for (int olp = 0; olp < listaCampFile.get(zx).sistemaPontuacao.size(); olp++) {
-            System.out.println(olp+"ºPonto: "+ listaCampFile.get(zx).sistemaPontuacao.get(olp));
-        }
-        
-        System.out.println(" #### Pilotos do Campeonato ###");
-        for (int zxc = 0; zxc < listaCampFile.get(zx).pilotos.size(); zxc++) {
-            System.out.println( listaCampFile.get(zx).pilotos.get(zxc).nome + ", " + listaCampFile.get(zx).pilotos.get(zxc).equipa + ",=" +  listaCampFile.get(zx).pilotos.get(zxc).ponto);
-
-        }
-        for (int i = 0; i < 2; i++) {
-            System.out.println("*******************************");
-        }
-        System.out.println("#### Resultado das Corridas#### ");
-        for (int wsx = 0; wsx < listaCampFile.get(zx).corridas.size(); wsx++) {
-            System.out.println("Corrida: " +  listaCampFile.get(zx).corridas.get(wsx).nome);
-            for (int plm = 0; plm <  listaCampFile.get(zx).corridas.get(wsx).pilotos.size(); plm++) {
-                System.out.println( listaCampFile.get(zx).corridas.get(wsx).pilotos.get(plm).nome + ", " + listaCampFile.get(zx).corridas.get(wsx).pilotos.get(plm).equipa+"= "+ listaCampFile.get(zx).corridas.get(wsx).pilotos.get(plm).ponto);
-            }
-
-        }
-        
-        }
-        
 
     }
 
 }
-
-
-
-
