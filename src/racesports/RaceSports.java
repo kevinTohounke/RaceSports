@@ -521,8 +521,11 @@ public class RaceSports {
                     }
 
                     listaCampFile.add(newCamp);
-                    quebraDeLinha();
+                    //quebraDeLinha();
                 }
+                //Organização do ArrayList
+                
+                
 
                 try {
 
@@ -570,6 +573,7 @@ public class RaceSports {
                 break;
 
         }
+        
 
     }
 
