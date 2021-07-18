@@ -65,6 +65,17 @@ public class RaceSports {
         String linha;
         int numeroPilotosEntrada = 0;
 
+        int nCamp, nPiloto, nProvas;
+        String sPontuacaoCamp;
+
+        String inputNP;
+        String[] vectInputNpSplit;
+        String nomePilotoEquipa;
+        String[] vectSpitPilotoEquipa ;
+
+        String nomePil ;
+        String EquipaPil ;
+
         Scanner in = new Scanner(System.in);
         String fileName, fileName2;
         fileName = "Input.txt";
@@ -97,6 +108,7 @@ public class RaceSports {
         Equipa equipaAux = new Equipa();
         Piloto pilotoAux = new Piloto();
         Piloto pilotoAux2 = new Piloto();
+        Piloto pilotoAux3 = new Piloto();
         int counterPil = 1;
         int counterLinhas = 1;
         int n = 1, k = 1, x = 0, c = 0, p = 1, t = 1, skp = 1, h = 1;
@@ -112,6 +124,8 @@ public class RaceSports {
         String fileNameTORead, s;
         fileNameTORead = "Input.txt";
 
+        String[] vectInputCampSplit;
+        String inputSC;
         String name, nomeClassificado;
         Campeonato campeonato;
 
@@ -124,48 +138,69 @@ public class RaceSports {
         switch (switchControl) {
             case 1:
                 // Registo de Campeonatos
-                do {
-                    campeonato = new Campeonato();
-                    System.out.println("Digite o nome do " + indexCampeonato + "º campeonato ");
-                    campeonato.nome = in.nextLine();
-                    System.out.println("Digite o ano de Realização: do " + indexCampeonato + "º campeonato ");
-                    campeonato.anoRealizacao = in.nextInt();
-                    in.nextLine();
-                    // ##REGISTO DOS PILOTOS
-                    do {
+                System.out.println("Pretende registar quantos campeonatos ? ");
+                nCamp = in.nextInt();
+                in.nextLine();
+                for (int hqm = 0; hqm < nCamp; hqm++) {
 
+                    campeonato = new Campeonato();
+                    System.out.println("Nome do Campeonato, 2021");
+                    System.out.println("Digite o nome do " + indexCampeonato + "º campeonato e o ano de realização separados por uma virgula conforme ilustrado no exemplo acima ");
+                    inputSC = in.nextLine();
+
+                    vectInputCampSplit = inputSC.split(",");
+
+                    campeonato.nome = vectInputCampSplit[0].trim();
+                    campeonato.anoRealizacao = Integer.parseInt(vectInputCampSplit[1].trim());
+
+                    // ##REGISTO DOS PILOTOS1
+                    System.out.println("Pretende registar quantos Pilotos ?");
+                    nPiloto = in.nextInt();
+                    in.nextLine();
+
+                    System.out.println("Nome do piloto, nome da equipa");
+                    System.out.println("Digite o nome do Piloto e o nome da sua equipa separados uma virgula conforme ilustrado no exemplo acima, e clique enter. Faça isso "+nPiloto+" vezes");
+                    
+                    for (int ctrPil = 0; ctrPil < nPiloto; ctrPil++) {
+                        
+                        inputNP = in.nextLine();
+                        vectInputNpSplit = inputNP.split(",");
                         piloto1 = new Piloto();
 
-                        System.out.println("Digite o nome do: " + p + "º Piloto");
-                        piloto1.nome = in.nextLine();
-
-                        System.out.println("Digite a equipa do: " + p + "º Piloto");
-                        piloto1.equipa = in.nextLine();
+                        piloto1.nome = vectInputNpSplit[0].trim();
+                        piloto1.equipa = vectInputNpSplit[1].trim();
                         campeonato.pilotos.add(piloto1);
 
-                        System.out.println(" DESEJA CONTINUAR A ADICIONAR PILOTOS ? \n 0 - Parar / 1 - Continuar ");
-                        n = in.nextInt();
                         p++;
-                        in.nextLine();
-                    } while (n != 0);
+
+                    }
                     p = 1;
                     // ####  REGISTO DO SISTEMA DE PONTUAÇÃO 
-                    do {
-                        int ponto;
-                        System.out.println("Digite o " + skp + "º ponto do sistema de pontuação do Campeonato:");
-                        ponto = in.nextInt();
+
+                    int ponto;
+                    System.out.println("5 2 3 4 5 6");
+                    System.out.println("Digite os pontos do sistema de pontuação separados por espaço conforme ilustrado no exemplo acima onde o primeiro indica a quantidade de pontos do sistema de pontuação: ");
+                    String inputSistema = in.nextLine();
+
+                    String[] vectPontoSPstring = inputSistema.split(" ");
+
+                    for (int iy = 1; iy < vectPontoSPstring.length; iy++) {
+                        ponto = Integer.parseInt(vectPontoSPstring[iy]);
                         campeonato.sistemaPontuacao.add(ponto);
-                        System.out.println("DESEJA CONTINUAR A ADICIONAR PONTOS NO SISTEMA DE PONTUAÇÃO ? \n 0 - Parar / 1 - Continuar ");
-                        k = in.nextInt();
-                        skp++;
-                        in.nextLine();
-                    } while (k != 0);
+                    }
+
+                    skp++;
+
                     skp = 1;
                     // ### REGISTO DO RESULTADO DAS CORRIDAS
-                    do {
+                    System.out.println("Deseja registar quantas Provas ?");
+                    nProvas = in.nextInt();
+                    in.nextLine();
+                    for (int ctrlProva = 0; ctrlProva < nProvas; ctrlProva++) {
+
                         // Instanciando uma corrida 
                         corrida = new Corrida();
-                        System.out.println("Digite o nome da: " + h + "º Corrida");
+                        System.out.println("Digite o nome da: " + h + "º Prova");
                         name = in.nextLine();
                         corrida.nome = name;
                         // Copiando pilotos de Campeonato na Corrida
@@ -177,43 +212,45 @@ public class RaceSports {
                         }
 
                         t = 1;
-                        //Atribuindo Pontos aos pilotos da corrida e do Campeonato 
-                        for (int w = 0; w < campeonato.sistemaPontuacao.size(); w++) {
-                            System.out.println("Digite o nome do " + t + "º classificado:");
-                            nomeClassificado = in.nextLine();
-                            for (int r = 0; r < corrida.pilotos.size(); r++) {
-                                if (corrida.pilotos.get(r).nome.trim().equalsIgnoreCase(nomeClassificado)) {
-                                    corrida.pilotos.get(r).ponto = campeonato.sistemaPontuacao.get(w);
-                                    campeonato.pilotos.get(r).ponto += campeonato.sistemaPontuacao.get(w);
-                                    if (t == 1) {
-                                        corrida.pilotos.get(r).desempate += 3;
-                                    }
-                                    if (t == 2) {
-                                        corrida.pilotos.get(r).desempate += 2;
-                                    }
-                                    if (t == 1) {
-                                        corrida.pilotos.get(r).desempate += 1;
+                        int w = 0;
+                        //Atribuindo pontos aos pilotos da corrida
+                        System.out.println("Nome do piloto, nome da equipa");
+                        System.out.println("Digite a classificação dos pilotos do melhor ao pior colocado fornecendo o nome do piloto seguido de virgula espaço e o nome da respectiva equipa conforme ilustrado acima ");
+                        for (int awi = 0; awi < campeonato.pilotos.size(); awi++) {
+                             nomePilotoEquipa = in.nextLine();
+                             vectSpitPilotoEquipa = nomePilotoEquipa.split(",");
+
+                             nomePil = vectSpitPilotoEquipa[0].trim();
+                             EquipaPil = vectSpitPilotoEquipa[1].trim();
+                            if (awi < campeonato.sistemaPontuacao.size()) {
+                                for (int r = 0; r < corrida.pilotos.size(); r++) {
+                                    if (corrida.pilotos.get(r).nome.trim().equalsIgnoreCase(nomePil)) {
+                                        corrida.pilotos.get(r).ponto = campeonato.sistemaPontuacao.get(w);
+                                        
+                                        campeonato.pilotos.get(r).ponto += campeonato.sistemaPontuacao.get(w);
+                                        if (w == 0) {
+                                            corrida.pilotos.get(r).desempate += 3;
+                                        }
+                                        if (w == 1) {
+                                            corrida.pilotos.get(r).desempate += 2;
+                                        }
+                                        if (w == 2) {
+                                            corrida.pilotos.get(r).desempate += 1;
+                                        }
                                     }
                                 }
                             }
-                            if (w >= campeonato.sistemaPontuacao.size()) {
-                                System.out.println("Piloto Invalido");
+                            w++;
 
-                            } else {
-                                t++;
-                            }
                         }
+
                         campeonato.corridas.add(corrida);
-                        System.out.println(" DESEJA CONTINUAR A ADICIONAR CORRIDAS ? \n 0 - Parar / 1 - Continuar ");
-                        c = in.nextInt();
                         h++;
 
-                        in.nextLine();
-
-                    } while (c != 0);
+                    }
                     h = 1;
 
-                    // ###Organizar os Pilotos do ArrayList  das Corridas do Campeonato em ordem Decrescente, do Melhor ao pior:
+                    // ###Organizar os Pilotos do ArrayList  das Corridas do Campeonato em ordem Decrescente, do Melhor ao pior de acordo a pontuação:
                     /*Corridas do Campeonato: */
                     for (int lop = 0; lop < campeonato.corridas.size(); lop++) {
 
@@ -245,25 +282,84 @@ public class RaceSports {
 
                         }
                     }
-                    // Criar ArrayList de equipas com ArrayList de Corridas e não do Campeonato
+                   
                     //Criação do ArrayList de Equipas 
                     for (int ver = 0; ver < campeonato.pilotos.size(); ver++) {
                         equipa = new Equipa();
                         equipa.ponto = campeonato.pilotos.get(ver).ponto;
-                        equipa.nome = campeonato.pilotos.get(ver).equipa;
+                        equipa.nome = campeonato.pilotos.get(ver).equipa.trim();
                         campeonato.equipas.add(equipa);
                     }
 
+                    
+                    
+                    // Somatorio de pontos de equipas com mesmo nome para a primeira occor
+                    for (int ptre = 0; ptre < campeonato.equipas.size(); ptre++) {
+                        for (int xsw = ptre + 1; xsw < campeonato.equipas.size(); xsw++) {
+                            if (campeonato.equipas.get(ptre).nome.equalsIgnoreCase(campeonato.equipas.get(xsw).nome) ) {
+                                 campeonato.equipas.get(ptre).ponto = campeonato.equipas.get(xsw).ponto + campeonato.equipas.get(ptre).ponto;
+                                
+                            }
+                        }
+
+                    }
+                    // Organização em Ordem Decrescente do ArrayList de Equipas, do Melhor ao Pior pela pontuação:
+                    for (int nmn = 0; nmn < campeonato.equipas.size(); nmn++) {
+
+                        for (int zxc = nmn + 1; zxc < campeonato.equipas.size(); zxc++) {
+                            if (campeonato.equipas.get(nmn).ponto < campeonato.equipas.get(zxc).ponto) {
+
+                                equipaAux.nome = campeonato.equipas.get(nmn).nome;
+                                equipaAux.ponto = campeonato.equipas.get(nmn).ponto;
+
+                                campeonato.equipas.get(nmn).nome = campeonato.equipas.get(zxc).nome;
+                                campeonato.equipas.get(nmn).ponto = campeonato.equipas.get(zxc).ponto;
+
+                                campeonato.equipas.get(zxc).nome = equipaAux.nome;
+                                campeonato.equipas.get(zxc).ponto = equipaAux.ponto;
+
+                            }
+                        }
+
+                    }
+                    
                     // Remoção de Equipes com mesmo nome, se encontrar mais uma ocorrência apaga a segunda, mas mantém a primeira.
                     for (int ptre = 0; ptre < campeonato.equipas.size(); ptre++) {
                         for (int xsw = ptre + 1; xsw < campeonato.equipas.size(); xsw++) {
-                            if (campeonato.equipas.get(ptre).nome.equalsIgnoreCase(campeonato.equipas.get(xsw).nome) && campeonato.equipas.get(ptre).ponto >= campeonato.equipas.get(xsw).ponto) {
+                            if (campeonato.equipas.get(ptre).nome.equalsIgnoreCase(campeonato.equipas.get(xsw).nome)) {
                                 campeonato.equipas.remove(xsw);
                             }
                         }
 
                     }
-                    // Organização em  Ordem Decrescente do ArrayList de Pilotos do campeonato, do Melhor ao Pior:
+                    
+                    // Organização em ordem lexicografica das equipas com mesmo ponto
+                     for (int lv = 0; lv < campeonato.equipas.size(); lv++) {
+
+                        for (int xg = lv + 1; xg < campeonato.equipas.size(); xg++) {
+                            if (campeonato.equipas.get(lv).ponto == campeonato.equipas.get(xg).ponto) {
+                                int sult = campeonato.equipas.get(lv).nome.compareTo(campeonato.equipas.get(xg).nome);
+                                if(sult>0){
+                                equipaAux.nome = campeonato.equipas.get(lv).nome;
+                                equipaAux.ponto = campeonato.equipas.get(lv).ponto;
+
+                                campeonato.equipas.get(lv).nome = campeonato.equipas.get(xg).nome;
+                                campeonato.equipas.get(lv).ponto = campeonato.equipas.get(xg).ponto;
+
+                                campeonato.equipas.get(xg).nome = equipaAux.nome;
+                                campeonato.equipas.get(xg).ponto = equipaAux.ponto;
+                                }
+                            }
+                        }
+
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
+                    // Organização em  Ordem Decrescente do ArrayList de Pilotos do campeonato, do Melhor ao Pior de acordo aos pontos:
                     for (int iop = 0; iop < campeonato.pilotos.size(); iop++) {
 
                         for (int opo = iop + 1; opo < campeonato.pilotos.size(); opo++) {
@@ -288,32 +384,44 @@ public class RaceSports {
                         }
 
                     }
-                    // Organização em Ordem Decrescente do ArrayList de Equipas, do Melhor ao Pior:
-                    for (int nmn = 0; nmn < campeonato.equipas.size(); nmn++) {
+                    //Organizaçao em ordem lexicografica do arrayList de pilotos do campeonato com mesmos pontos
+                    
+                    for (int bqp = 0; bqp < campeonato.pilotos.size(); bqp++) {
+                        for (int fgr = bqp+1; fgr < campeonato.pilotos.size(); fgr++) {
+                            if (campeonato.pilotos.get(bqp).ponto == campeonato.pilotos.get(fgr).ponto){
+                                int result= campeonato.pilotos.get(bqp).nome.compareTo(campeonato.pilotos.get(fgr).nome);
+                                if(result>0){
+                                pilotoAux3.nome = campeonato.pilotos.get(bqp).nome;
+                                pilotoAux3.equipa = campeonato.pilotos.get(bqp).equipa;
+                                pilotoAux3.ponto = campeonato.pilotos.get(bqp).ponto;
+                                pilotoAux3.desempate = campeonato.pilotos.get(bqp).desempate;
 
-                        for (int zxc = nmn + 1; zxc < campeonato.equipas.size(); zxc++) {
-                            if (campeonato.equipas.get(nmn).ponto < campeonato.equipas.get(zxc).ponto) {
+                                campeonato.pilotos.get(bqp).nome = campeonato.pilotos.get(fgr).nome;
+                                campeonato.pilotos.get(bqp).equipa = campeonato.pilotos.get(fgr).equipa;
+                                campeonato.pilotos.get(bqp).ponto = campeonato.pilotos.get(fgr).ponto;
+                                campeonato.pilotos.get(bqp).desempate = campeonato.pilotos.get(fgr).desempate;
 
-                                equipaAux.nome = campeonato.equipas.get(nmn).nome;
-                                equipaAux.ponto = campeonato.equipas.get(nmn).ponto;
-
-                                campeonato.equipas.get(nmn).nome = campeonato.equipas.get(zxc).nome;
-                                campeonato.equipas.get(nmn).ponto = campeonato.equipas.get(zxc).ponto;
-
-                                campeonato.equipas.get(zxc).nome = equipaAux.nome;
-                                campeonato.equipas.get(zxc).ponto = equipaAux.ponto;
-
+                                campeonato.pilotos.get(fgr).nome = pilotoAux2.nome;
+                                campeonato.pilotos.get(fgr).equipa = pilotoAux2.equipa;
+                                campeonato.pilotos.get(fgr).ponto = pilotoAux2.ponto;
+                                campeonato.pilotos.get(fgr).desempate = pilotoAux2.desempate;
+                                    
+                                    
+                                }
+                            
                             }
                         }
-
                     }
+                    
+                  
+                    
+                    
+                    
 
-                    System.out.println(" DESEJA CONTINUAR A ADICIONAR CAMPEONATOS ? \n 0 - Parar / 1 - Continuar ");
-                    whileControlerCampeonato = in.nextInt();
                     indexCampeonato++;
-                    in.nextLine();
+                   
                     arrayListDeCampeonato.add(campeonato);
-                } while (whileControlerCampeonato != 0);
+                }
 
                 // ###  ESCRITA DOS VALORES DE ENTRADA  NUM FICHEIRO DE ENTRADA DE ACORDO AO ENUNCIADO
                 try {
@@ -411,8 +519,9 @@ public class RaceSports {
                             bf2.newLine();
                             counterPil++;
                         }
+                        counterPil = 1;
 
-                        bf2.newLine();
+                       
                     }
                     bf2.close();
 
@@ -508,6 +617,7 @@ public class RaceSports {
                             if (jos < newCamp.sistemaPontuacao.size()) {
                                 newPilotoNewCamp.ponto = newCamp.sistemaPontuacao.get(jos);
                                 jos++;
+                               // System.out.println("Ponto do piloto :"+newPilotoNewCamp.nome+" = "+newPilotoNewCamp.ponto);
                             }
 
                             corridaNewCamp.pilotos.add(newPilotoNewCamp);
@@ -519,24 +629,27 @@ public class RaceSports {
                         qtdDePilotoDoCamp = valor;
                         numeroDeCorridaNewCamp--;
                     }
+                    
+                   
+                    
 
                     listaCampFile.add(newCamp);
-                    //quebraDeLinha();
+                                                                                
+                                                                                
+                                                                                
                 }
-                //Organização do ArrayList
-                
-                
+                //Escrita num ficheiro de Saida
 
                 try {
 
                     bf2 = new BufferedWriter(new FileWriter(fileName2));
                     for (int contadorEscritaCampeonatoOutput = 0; contadorEscritaCampeonatoOutput < listaCampFile.size(); contadorEscritaCampeonatoOutput++) {
-                        bf2.write( listaCampFile.get(contadorEscritaCampeonatoOutput).nome + ", " +  listaCampFile.get(contadorEscritaCampeonatoOutput).anoRealizacao);
+                        bf2.write(listaCampFile.get(contadorEscritaCampeonatoOutput).nome + ", " + listaCampFile.get(contadorEscritaCampeonatoOutput).anoRealizacao);
 
                         bf2.newLine();
                         bf2.newLine();
 
-                        bf2.write("Classificação após " +  listaCampFile.get(contadorEscritaCampeonatoOutput).corridas.size() + " provas realizadas");
+                        bf2.write("Classificação após " + listaCampFile.get(contadorEscritaCampeonatoOutput).corridas.size() + " provas realizadas");
                         bf2.newLine();
                         bf2.newLine();
                         bf2.write("Pilotos");
@@ -545,7 +658,7 @@ public class RaceSports {
 
                         // Escrita dos Pilotos:
                         for (int perty = 0; perty < listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.size(); perty++) {
-                            bf2.write(Integer.toString(counterPil) + ". " +  listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).nome + ", " +  listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).equipa + ", " + Integer.toString( listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).ponto) + " pontos");
+                            bf2.write(Integer.toString(counterPil) + ". " + listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).nome + ", " + listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).equipa + ", " + Integer.toString(listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).ponto) + " pontos");
                             bf2.newLine();
                             counterPil++;
                         }
@@ -556,8 +669,8 @@ public class RaceSports {
                         bf2.newLine();
                         bf2.newLine();
                         //Escrita das equipas
-                        for (int equipCoun = 0; equipCoun <  listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.size(); equipCoun++) {
-                            bf2.write(Integer.toString(counterPil) + ". " +  listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.get(equipCoun).nome + ", " + Integer.toString( listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.get(equipCoun).ponto) + " pontos");
+                        for (int equipCoun = 0; equipCoun < listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.size(); equipCoun++) {
+                            bf2.write(Integer.toString(counterPil) + ". " + listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.get(equipCoun).nome + ", " + Integer.toString(listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.get(equipCoun).ponto) + " pontos");
                             bf2.newLine();
                             counterPil++;
                         }
@@ -573,7 +686,6 @@ public class RaceSports {
                 break;
 
         }
-        
 
     }
 
