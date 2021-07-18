@@ -11,6 +11,62 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class RaceSports {
+    
+    public static ArrayList<Equipa> ListarEquipasIdCampeonato(ArrayList<Campeonato> listaCamp){
+    ArrayList<Equipa> listaEquipa=new ArrayList<>();
+    Equipa equipaAd=null;
+        for (int indeXm = 0; indeXm < listaCamp.size(); indeXm++) {
+            for (int porto = 0; porto < listaCamp.get(indeXm).equipas.size(); porto++) {
+                equipaAd= new Equipa();
+                equipaAd.nome=listaCamp.get(indeXm).equipas.get(porto).nome;
+                equipaAd.ponto=listaCamp.get(indeXm).equipas.get(porto).ponto;
+                listaEquipa.add(equipaAd);
+            }
+            
+        }
+    return listaEquipa;
+    }
+    
+    public static ArrayList<Equipa> listarEquipasDoCamp(Campeonato camp){
+    ArrayList<Equipa> listaEquipaCamp= new ArrayList<>();
+    Equipa equipaAd1= null;
+        for (int indeXw = 0; indeXw < camp.equipas.size(); indeXw++) {
+            equipaAd1= new Equipa();
+                equipaAd1.nome=camp.equipas.get(indeXw).nome;
+                equipaAd1.ponto=camp.equipas.get(indeXw).ponto;
+                listaEquipaCamp.add(equipaAd1);
+        }
+        return listaEquipaCamp;
+    }
+    
+    public static ArrayList<Piloto> listarPilotosEquipa(ArrayList<Campeonato> listaCamp2, String nomeEquipa){
+        ArrayList<Piloto> listaPiloto= new ArrayList<>();
+        Piloto pilotoEq= null;
+        for (int iva = 0; iva < listaCamp2.size(); iva++) {
+            for (int dfq = 0; dfq < listaCamp2.get(iva).pilotos.size(); dfq++) {
+            if (nomeEquipa.equalsIgnoreCase(listaCamp2.get(iva).pilotos.get(dfq).equipa)) {
+                pilotoEq= new Piloto();
+                pilotoEq.nome=listaCamp2.get(iva).pilotos.get(dfq).nome;
+                pilotoEq.ponto=listaCamp2.get(iva).pilotos.get(dfq).ponto;
+                pilotoEq.equipa=nomeEquipa;
+                pilotoEq.desempate=listaCamp2.get(iva).pilotos.get(dfq).desempate;
+                listaPiloto.add(pilotoEq);
+                
+            }
+        }
+        }
+        return listaPiloto;
+    }
+    
+    public static Piloto pilotoMaisPontoCamp(Campeonato camp){
+    Piloto retorno = new Piloto();
+       retorno.nome= camp.pilotos.get(0).nome;
+       retorno.ponto= camp.pilotos.get(0).ponto;
+       retorno.equipa= camp.pilotos.get(0).equipa;
+       retorno.desempate= camp.pilotos.get(0).desempate;
+       
+       return retorno;
+    }
 
     public static int aux = 0;
     public static ArrayList<String> leituraFile = new ArrayList<>();
@@ -529,6 +585,7 @@ public class RaceSports {
                     System.out.println(ex.getMessage());
 
                 }
+               
 
                 break;
 
@@ -617,19 +674,209 @@ public class RaceSports {
                             if (jos < newCamp.sistemaPontuacao.size()) {
                                 newPilotoNewCamp.ponto = newCamp.sistemaPontuacao.get(jos);
                                 jos++;
-                               // System.out.println("Ponto do piloto :"+newPilotoNewCamp.nome+" = "+newPilotoNewCamp.ponto);
+                                 if (jos == 0) {
+                                           newPilotoNewCamp.desempate += 3;
+                                        }
+                                        if (jos == 1) {
+                                            newPilotoNewCamp.desempate += 2;
+                                        }
+                                        if (jos == 2) {
+                                            newPilotoNewCamp.desempate += 1;
+                                        }
+                                
                             }
-
+                           
                             corridaNewCamp.pilotos.add(newPilotoNewCamp);
 
                             qtdDePilotoDoCamp--;
                         }
                         newCamp.corridas.add(corridaNewCamp);
+                        
+                        
+                        
+                        
+                        
                         jos = 0;
                         qtdDePilotoDoCamp = valor;
                         numeroDeCorridaNewCamp--;
                     }
                     
+                    for (int awi = 0; awi < newCamp.pilotos.size(); awi++) {
+                             
+                            for (int tva = 0; tva < newCamp.corridas.size(); tva++) {
+                                for (int ilu = 0; ilu < newCamp.corridas.get(tva).pilotos.size(); ilu++) {
+                                    if(newCamp.pilotos.get(awi).nome.equalsIgnoreCase(newCamp.corridas.get(tva).pilotos.get(ilu).nome)){
+                            newCamp.pilotos.get(awi).ponto+=newCamp.corridas.get(tva).pilotos.get(ilu).ponto;
+                            
+                            newCamp.pilotos.get(awi).desempate=newCamp.corridas.get(tva).pilotos.get(ilu).desempate;
+                            
+                            }
+                                }
+                            
+                        }
+
+                        }
+                     //ORGANIZAÇÃO LOUCA EM CADA CAMPEONATO ANTES DE ADICIONAR NO ARRAYLIST DE CAMPEONATOS
+                     for (int lop = 0; lop < newCamp.corridas.size(); lop++) {
+
+                        /* Pilotos da corrida nº lop : */
+                        for (int zx = 0; zx < newCamp.corridas.get(lop).pilotos.size(); zx++) {
+
+                            for (int lit = zx + 1; lit < newCamp.corridas.get(lop).pilotos.size(); lit++) {
+
+                                if ((newCamp.corridas.get(lop).pilotos.get(zx).ponto + newCamp.corridas.get(lop).pilotos.get(zx).desempate) < (newCamp.corridas.get(lop).pilotos.get(lit).ponto + newCamp.corridas.get(lop).pilotos.get(lit).desempate)) {
+
+                                    pilotoAux.nome = newCamp.corridas.get(lop).pilotos.get(lit).nome;
+                                    pilotoAux.equipa =newCamp.corridas.get(lop).pilotos.get(lit).equipa;
+                                    pilotoAux.ponto = newCamp.corridas.get(lop).pilotos.get(lit).ponto;
+                                    pilotoAux.desempate = newCamp.corridas.get(lop).pilotos.get(lit).desempate;
+
+                                    newCamp.corridas.get(lop).pilotos.get(lit).nome = newCamp.corridas.get(lop).pilotos.get(zx).nome;
+                                    newCamp.corridas.get(lop).pilotos.get(lit).equipa = newCamp.corridas.get(lop).pilotos.get(zx).equipa;
+                                    newCamp.corridas.get(lop).pilotos.get(lit).ponto = newCamp.corridas.get(lop).pilotos.get(zx).ponto;
+                                    newCamp.corridas.get(lop).pilotos.get(lit).desempate = newCamp.corridas.get(lop).pilotos.get(zx).desempate;
+
+                                   newCamp.corridas.get(lop).pilotos.get(zx).nome = pilotoAux.nome;
+                                    newCamp.corridas.get(lop).pilotos.get(zx).equipa = pilotoAux.equipa;
+                                    newCamp.corridas.get(lop).pilotos.get(zx).ponto = pilotoAux.ponto;
+                                    newCamp.corridas.get(lop).pilotos.get(zx).desempate = pilotoAux.desempate;
+
+                                }
+
+                            }
+
+                        }
+                    }
+                   
+                    //Criação do ArrayList de Equipas 
+                    for (int ver = 0; ver < newCamp.pilotos.size(); ver++) {
+                        equipa = new Equipa();
+                        equipa.ponto = newCamp.pilotos.get(ver).ponto;
+                        equipa.nome = newCamp.pilotos.get(ver).equipa.trim();
+                        newCamp.equipas.add(equipa);
+                    }
+
+                    
+                    
+                    // Somatorio de pontos de equipas com mesmo nome para a primeira occor
+                    for (int ptre = 0; ptre < newCamp.equipas.size(); ptre++) {
+                        for (int xsw = ptre + 1; xsw < newCamp.equipas.size(); xsw++) {
+                            if (newCamp.equipas.get(ptre).nome.equalsIgnoreCase(newCamp.equipas.get(xsw).nome) ) {
+                                 newCamp.equipas.get(ptre).ponto = newCamp.equipas.get(xsw).ponto + newCamp.equipas.get(ptre).ponto;
+                                
+                            }
+                        }
+
+                    }
+                    // Organização em Ordem Decrescente do ArrayList de Equipas, do Melhor ao Pior pela pontuação:
+                    for (int nmn = 0; nmn <newCamp.equipas.size(); nmn++) {
+
+                        for (int zxc = nmn + 1; zxc < newCamp.equipas.size(); zxc++) {
+                            if (newCamp.equipas.get(nmn).ponto < newCamp.equipas.get(zxc).ponto) {
+
+                                equipaAux.nome =newCamp.equipas.get(nmn).nome;
+                                equipaAux.ponto = newCamp.equipas.get(nmn).ponto;
+
+                               newCamp.equipas.get(nmn).nome = newCamp.equipas.get(zxc).nome;
+                                newCamp.equipas.get(nmn).ponto = newCamp.equipas.get(zxc).ponto;
+
+                                newCamp.equipas.get(zxc).nome = equipaAux.nome;
+                                newCamp.equipas.get(zxc).ponto = equipaAux.ponto;
+
+                            }
+                        }
+
+                    }
+                    
+                    // Remoção de Equipes com mesmo nome, se encontrar mais uma ocorrência apaga a segunda, mas mantém a primeira.
+                    for (int ptre = 0; ptre < newCamp.equipas.size(); ptre++) {
+                        for (int xsw = ptre + 1; xsw < newCamp.equipas.size(); xsw++) {
+                            if (newCamp.equipas.get(ptre).nome.equalsIgnoreCase(newCamp.equipas.get(xsw).nome)) {
+                                newCamp.equipas.remove(xsw);
+                            }
+                        }
+
+                    }
+                    
+                    // Organização em ordem lexicografica das equipas com mesmo ponto
+                     for (int lv = 0; lv < newCamp.equipas.size(); lv++) {
+
+                        for (int xg = lv + 1; xg < newCamp.equipas.size(); xg++) {
+                            if (newCamp.equipas.get(lv).ponto == newCamp.equipas.get(xg).ponto) {
+                                int sult = newCamp.equipas.get(lv).nome.compareTo(newCamp.equipas.get(xg).nome);
+                                if(sult>0){
+                                equipaAux.nome = newCamp.equipas.get(lv).nome;
+                                equipaAux.ponto = newCamp.equipas.get(lv).ponto;
+
+                                newCamp.equipas.get(lv).nome = newCamp.equipas.get(xg).nome;
+                               newCamp.equipas.get(lv).ponto = newCamp.equipas.get(xg).ponto;
+
+                               newCamp.equipas.get(xg).nome = equipaAux.nome;
+                                newCamp.equipas.get(xg).ponto = equipaAux.ponto;
+                                }
+                            }
+                        }
+
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
+                    // Organização em  Ordem Decrescente do ArrayList de Pilotos do campeonato, do Melhor ao Pior de acordo aos pontos:
+                    for (int iop = 0; iop <newCamp.pilotos.size(); iop++) {
+
+                        for (int opo = iop + 1; opo < newCamp.pilotos.size(); opo++) {
+
+                            if (newCamp.pilotos.get(iop).ponto < newCamp.pilotos.get(opo).ponto) {
+                                pilotoAux2.nome = newCamp.pilotos.get(iop).nome;
+                                pilotoAux2.equipa = newCamp.pilotos.get(iop).equipa;
+                                pilotoAux2.ponto = newCamp.pilotos.get(iop).ponto;
+                                pilotoAux2.desempate = newCamp.pilotos.get(iop).desempate;
+
+                                newCamp.pilotos.get(iop).nome =newCamp.pilotos.get(opo).nome;
+                                newCamp.pilotos.get(iop).equipa = newCamp.pilotos.get(opo).equipa;
+                                newCamp.pilotos.get(iop).ponto = newCamp.pilotos.get(opo).ponto;
+                                newCamp.pilotos.get(iop).desempate =newCamp.pilotos.get(opo).desempate;
+
+                               newCamp.pilotos.get(opo).nome = pilotoAux2.nome;
+                               newCamp.pilotos.get(opo).equipa = pilotoAux2.equipa;
+                                newCamp.pilotos.get(opo).ponto = pilotoAux2.ponto;
+                               newCamp.pilotos.get(opo).desempate = pilotoAux2.desempate;
+
+                            }
+                        }
+
+                    }
+                    //Organizaçao em ordem lexicografica do arrayList de pilotos do campeonato com mesmos pontos
+                    
+                    for (int bqp = 0; bqp < newCamp.pilotos.size(); bqp++) {
+                        for (int fgr = bqp+1; fgr < newCamp.pilotos.size(); fgr++) {
+                            if (newCamp.pilotos.get(bqp).ponto == newCamp.pilotos.get(fgr).ponto){
+                                int result= 0;//newCamp.pilotos.get(bqp).nome.compareTo(newCamp.pilotos.get(fgr).nome);
+                                if(result>0){
+                                pilotoAux3.nome = newCamp.pilotos.get(bqp).nome;
+                                pilotoAux3.equipa = newCamp.pilotos.get(bqp).equipa;
+                                pilotoAux3.ponto = newCamp.pilotos.get(bqp).ponto;
+                                pilotoAux3.desempate = newCamp.pilotos.get(bqp).desempate;
+
+                               newCamp.pilotos.get(bqp).nome = newCamp.pilotos.get(fgr).nome;
+                               newCamp.pilotos.get(bqp).equipa = newCamp.pilotos.get(fgr).equipa;
+                               newCamp.pilotos.get(bqp).ponto = newCamp.pilotos.get(fgr).ponto;
+                               newCamp.pilotos.get(bqp).desempate = newCamp.pilotos.get(fgr).desempate;
+
+                                newCamp.pilotos.get(fgr).nome = pilotoAux2.nome;
+                               newCamp.pilotos.get(fgr).equipa = pilotoAux2.equipa;
+                               newCamp.pilotos.get(fgr).ponto = pilotoAux2.ponto;
+                                newCamp.pilotos.get(fgr).desempate = pilotoAux2.desempate;
+                                    
+                                    
+                                }
+                            
+                            }
+                        }
+                    }
                    
                     
 
@@ -638,18 +885,19 @@ public class RaceSports {
                                                                                 
                                                                                 
                 }
+                
                 //Escrita num ficheiro de Saida
 
                 try {
 
                     bf2 = new BufferedWriter(new FileWriter(fileName2));
-                    for (int contadorEscritaCampeonatoOutput = 0; contadorEscritaCampeonatoOutput < listaCampFile.size(); contadorEscritaCampeonatoOutput++) {
-                        bf2.write(listaCampFile.get(contadorEscritaCampeonatoOutput).nome + ", " + listaCampFile.get(contadorEscritaCampeonatoOutput).anoRealizacao);
+                    for (int idCamp = 0; idCamp < listaCampFile.size(); idCamp++) {
+                        bf2.write(listaCampFile.get(idCamp).nome + ", " + listaCampFile.get(idCamp).anoRealizacao);
 
                         bf2.newLine();
                         bf2.newLine();
 
-                        bf2.write("Classificação após " + listaCampFile.get(contadorEscritaCampeonatoOutput).corridas.size() + " provas realizadas");
+                        bf2.write("Classificação após " + listaCampFile.get(idCamp).corridas.size() + " provas realizadas");
                         bf2.newLine();
                         bf2.newLine();
                         bf2.write("Pilotos");
@@ -657,8 +905,8 @@ public class RaceSports {
                         bf2.newLine();
 
                         // Escrita dos Pilotos:
-                        for (int perty = 0; perty < listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.size(); perty++) {
-                            bf2.write(Integer.toString(counterPil) + ". " + listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).nome + ", " + listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).equipa + ", " + Integer.toString(listaCampFile.get(contadorEscritaCampeonatoOutput).pilotos.get(perty).ponto) + " pontos");
+                        for (int perty = 0; perty < listaCampFile.get(idCamp).pilotos.size(); perty++) {
+                            bf2.write(Integer.toString(counterPil) + ". " + listaCampFile.get(idCamp).pilotos.get(perty).nome + ", " + listaCampFile.get(idCamp).pilotos.get(perty).equipa + ", " + Integer.toString(listaCampFile.get(idCamp).pilotos.get(perty).ponto) + " pontos");
                             bf2.newLine();
                             counterPil++;
                         }
@@ -669,12 +917,12 @@ public class RaceSports {
                         bf2.newLine();
                         bf2.newLine();
                         //Escrita das equipas
-                        for (int equipCoun = 0; equipCoun < listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.size(); equipCoun++) {
-                            bf2.write(Integer.toString(counterPil) + ". " + listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.get(equipCoun).nome + ", " + Integer.toString(listaCampFile.get(contadorEscritaCampeonatoOutput).equipas.get(equipCoun).ponto) + " pontos");
+                        for (int equipCoun = 0; equipCoun < listaCampFile.get(idCamp).equipas.size(); equipCoun++) {
+                            bf2.write(Integer.toString(counterPil) + ". " + listaCampFile.get(idCamp).equipas.get(equipCoun).nome + ", " + Integer.toString(listaCampFile.get(idCamp).equipas.get(equipCoun).ponto) + " pontos");
                             bf2.newLine();
                             counterPil++;
                         }
-
+                        counterPil = 1;
                         bf2.newLine();
                     }
                     bf2.close();
